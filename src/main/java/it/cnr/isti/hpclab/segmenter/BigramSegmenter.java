@@ -37,8 +37,7 @@ public class BigramSegmenter extends UnigramSegmenter
 			String bigram = prev + " " + word;
 			if (bigram_counts.containsKey(bigram) && unigram_counts.containsKey(prev)) {
 				// Conditional probability of the word given the previous word.
-				// The technical name is *stupid backoff* and it's not a probability
-				// distribution but it works well in practice.
+				// It's not a probability distribution but it works well in practice.
 				return bigram_counts.getFloat(bigram) / TOTAL / score(prev);
 			} else {
 				// Fall back to using the unigram probability.
