@@ -1,0 +1,23 @@
+File Descriptions:
+
+Files from http://norvig.com/ngrams/:
+
+* unigrams.txt	The 1/3 million most frequent words, all lowercase, with counts
+* bigrams.txt	The 1/4 million most frequent two-word (lowercase) bigrams, with counts
+
+Files from MSN query log
+The MSN queries have been filtered as follow:
+1. All queries with not-alphanumeric characters removed (including commas, quotes, dots, etc)
+2. All queries with less than 2 (or 3 for trigrams) or more than 10 tokens removed
+3. All queries lowercased
+
+* msn.clean.frequent.unigrams.txt		the most frequent unigrams, i.e. appearing at least 5 times in the filtered query log
+* msn.clean.frequent.bigrams.txt		the most frequent bigrams,  i.e. appearing at least 5 times in the filtered query log
+* msn.clean.frequent.trigrams.txt		the most frequent trigrams, i.e. appearing at least 5 times in the filtered query log
+
+Note that no stemming, stopwords removal or word segmentation has been performed. The code to generate trigrams is as follows:
+
+ $> zless del.me.gz | grep -v '[^[:alnum:][:blank:]]' | awk '{ if (NF >=3 && NF <= 10) {split($0,a," "); for (i=1; i <= NF-2; i++) {print a[i], a[i+1], a[i+2]}}}' | tr A-Z a-z | sort | uniq -c | sort -nr -k1,1 |  gzip > clean.trigrams.txt.gz
+ 
+ $> zless clean.trigrams.txt.gz | awk '{if ($1 > 4) print $0}' | gzip > clean.frequent.trigrams.txt.gz
+
