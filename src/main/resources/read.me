@@ -18,6 +18,10 @@ The MSN queries have been filtered as follow:
 Note that no stemming, stopwords removal or word segmentation has been performed. The code to generate trigrams is as follows:
 
  $> zless del.me.gz | grep -v '[^[:alnum:][:blank:]]' | awk '{ if (NF >=3 && NF <= 10) {split($0,a," "); for (i=1; i <= NF-2; i++) {print a[i], a[i+1], a[i+2]}}}' | tr A-Z a-z | sort | uniq -c | sort -nr -k1,1 |  gzip > clean.trigrams.txt.gz
- 
+
  $> zless clean.trigrams.txt.gz | awk '{if ($1 > 4) print $0}' | gzip > clean.frequent.trigrams.txt.gz
 
+Titles from Wikipedia
+
+$> wget https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-all-titles-in-ns0.gz
+$> zless enwiki-latest-all-titles-in-ns0.gz | grep -v '[^A-Za-z0-9_]' | tr A-Z a-z | tr "_" " " | awk '{ if (NF > 1 && NF <= 5) print $0}' | gzip > clean.filtered.wiki.titles.txt.gz
