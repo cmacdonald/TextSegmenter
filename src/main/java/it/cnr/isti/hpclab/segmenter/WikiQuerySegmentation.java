@@ -115,9 +115,9 @@ public class WikiQuerySegmentation
 	public static Segmentation segment(String text, int ngram_limit)
 	{
 		Segmentation best_segmentation = null;
-		float best_score = 0.0f;
+		float best_score = -1.0f;
 		for (Segmentation curr_segmentation: TextSegmentation.create(text, ngram_limit)) {
-			float curr_score = -1.0f;
+			float curr_score = 0.0f;
 			for (Segment segment: curr_segmentation) {
 				curr_score += segment.size() * weight(segment);
 			}
@@ -134,10 +134,12 @@ public class WikiQuerySegmentation
 		String test1 = "toronto blue jays";
 		String test2 = "new york city blue jeans";
 		String test3 = "new york city";
+		String test4 = "www regisandkelly com";
 		
 		System.err.println(segment(test1, 3));
 		System.err.println(segment(test2, 3));
 		System.err.println(segment(test3, 3));
+		System.err.println(segment(test4, 3));
 
 	}
 }
