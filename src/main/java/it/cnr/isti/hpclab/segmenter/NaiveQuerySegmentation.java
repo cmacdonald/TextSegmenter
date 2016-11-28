@@ -55,7 +55,7 @@ public class NaiveQuerySegmentation
 		int bi_norm  = normalization ? 4 : 1;
 		
 		Segmentation best_segmentation = null;
-		float best_score = 0.0f;
+		float best_score = -1.0f;
 		for (Segmentation curr_segmentation: TextSegmentation.create(text, ngram_limit)) {
 			float curr_score = 0.0f;
 			for (Segment segment: curr_segmentation) {
