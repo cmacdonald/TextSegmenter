@@ -61,6 +61,8 @@ public class TextSegmentation
 			return new Iterator<Pair<String,String>>() 
 			{
 				int pos = 1;
+
+				@Override public void remove() { throw new UnsupportedOperationException(); }
 				
 				@Override
 				public boolean hasNext() 
@@ -74,8 +76,8 @@ public class TextSegmentation
 				{
 					
 					Pair<String, String> res = new Pair<String, String>(
-							String.join(" ", Arrays.copyOfRange(words, 0, pos)),
-							String.join(" ", Arrays.copyOfRange(words, pos, words.length))
+							strJoin(Arrays.copyOfRange(words, 0, pos), " "), //String.join(" ", Arrays.copyOfRange(words, 0, pos)),
+							strJoin(Arrays.copyOfRange(words, pos, words.length), " ") //String.join(" ", Arrays.copyOfRange(words, pos, words.length))
 					);
 					
 					pos++;
@@ -185,4 +187,18 @@ public class TextSegmentation
 			System.err.print("(" + s + ") ");
 		System.err.println();
 	}
+
+	public static String strJoin(List<String> aArr, String sSep) {
+		return strJoin(aArr.toArray(new String[aArr.size()]), sSep);
+	}
+
+	public static String strJoin(String[] aArr, String sSep) {
+    StringBuilder sbStr = new StringBuilder();
+    for (int i = 0, il = aArr.length; i < il; i++) {
+        if (i > 0)
+            sbStr.append(sSep);
+        sbStr.append(aArr[i]);
+    }
+    return sbStr.toString();
+}
 }

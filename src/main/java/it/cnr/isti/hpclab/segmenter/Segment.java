@@ -8,6 +8,21 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 // A simple class implementing a sequence of word
 public class Segment implements Iterable<String>
 {
+
+ public static String strJoin(Collection<String> aArr, String sSep) {
+                return strJoin(aArr.toArray(new String[aArr.size()]), sSep);
+        }
+
+public static String strJoin(String[] aArr, String sSep) {
+    StringBuilder sbStr = new StringBuilder();
+    for (int i = 0, il = aArr.length; i < il; i++) {
+        if (i > 0)
+            sbStr.append(sSep);
+        sbStr.append(aArr[i]);
+    }
+    return sbStr.toString();
+}
+
 	private final Collection<String> words;
 
 	public Segment(final String text)
@@ -60,7 +75,7 @@ public class Segment implements Iterable<String>
 	@Override
 	public String toString() 
 	{
-		return String.join(" ", words);
+		return strJoin(words, " "); // String.join(" ", words);
 	}
 
 }

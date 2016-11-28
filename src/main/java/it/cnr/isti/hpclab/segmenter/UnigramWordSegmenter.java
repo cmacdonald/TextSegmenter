@@ -102,6 +102,8 @@ public class UnigramWordSegmenter
 					pos++;
 					return res;
 				}
+
+				@Override public void remove() { throw new UnsupportedOperationException(); }
 			};
 		}	
 	}
