@@ -112,7 +112,7 @@ public class WordnetExpander
 	{
 		String test1 = "greek";
 		String test2 = "welfare";
-		String test3 = "Agreeable";
+		String test3 = "restaurant";
 		
 		System.err.println(WordnetExpander.getSynonims(test1));
 		System.err.println(WordnetExpander.getSynonims(test2));

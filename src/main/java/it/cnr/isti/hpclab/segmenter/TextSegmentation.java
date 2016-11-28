@@ -34,7 +34,7 @@ public class TextSegmentation
 	        	@Override
 	            public Collection<Segmentation> load(String input) 
 	        	{
-	                return _search(input);
+	                return unique(_search(input));
 	            }
 	        });
 
@@ -73,15 +73,13 @@ public class TextSegmentation
 
 				@Override
 				public Pair<String,String> next() 
-				{
-					
+				{	
 					Pair<String, String> res = new Pair<String, String>(
-							strJoin(Arrays.copyOfRange(words, 0, pos), " "), //String.join(" ", Arrays.copyOfRange(words, 0, pos)),
-							strJoin(Arrays.copyOfRange(words, pos, words.length), " ") //String.join(" ", Arrays.copyOfRange(words, pos, words.length))
+					strJoin(Arrays.copyOfRange(words, 0, pos), " "), //String.join(" ", Arrays.copyOfRange(words, 0, pos)),
+					strJoin(Arrays.copyOfRange(words, pos, words.length), " ") //String.join(" ", Arrays.copyOfRange(words, pos, words.length))
 					);
 					
 					pos++;
-					
 					return res;
 				}
 			};
@@ -110,7 +108,8 @@ public class TextSegmentation
 		// return unique(_search(input));
 		
 		try {
-			return unique(memoizationCache.get(input));
+			// return unique(memoizationCache.get(input));
+			return (memoizationCache.get(input));
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 			return null;
@@ -144,7 +143,7 @@ public class TextSegmentation
 		List<Segmentation> set = new ObjectArrayList<Segmentation>();
 		for (Segmentation l: ll)
 			if (!set.contains(l))
-			set.add(l);
+				set.add(l);
 		return set;
 	}
 	

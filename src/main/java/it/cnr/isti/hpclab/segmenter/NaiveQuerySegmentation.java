@@ -93,9 +93,11 @@ public class NaiveQuerySegmentation
 		String test1 = "toronto blue jays";
 		String test2 = "new york city blue jeans";
 		String test3 = "new york city";
+		String test4 = "verizon com billview";
 		
 		System.err.println(segment(test1,true, 3));
 		System.err.println(segment(test2,false,3));
 		System.err.println(segment(test3,true, 3));
+		System.err.println(segment(test4,true, 3));
 	}
 }

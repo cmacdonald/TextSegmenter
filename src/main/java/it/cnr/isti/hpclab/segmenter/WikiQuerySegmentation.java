@@ -134,10 +134,12 @@ public class WikiQuerySegmentation
 		String test1 = "toronto blue jays";
 		String test2 = "new york city blue jeans";
 		String test3 = "new york city";
+		String test4 = "www regisandkelly com";
 		
 		System.err.println(segment(test1, 3));
 		System.err.println(segment(test2, 3));
 		System.err.println(segment(test3, 3));
+		System.err.println(segment(test4, 3));
 
 	}
 }
