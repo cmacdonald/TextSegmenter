@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
 import java.util.concurrent.ExecutionException;
+import java.io.*;
 
 import org.apache.commons.math3.util.Pair;
 
@@ -13,6 +16,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 
 // This class implements a static method segment(text) that takes as input a string of text.
 // It outputs all possible segmentations of the given text, breaking it into words at whitespaces.
@@ -22,6 +26,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 
 public class TextSegmentation 
 {
+	
 	protected static final int DEFAULT_CACHE_SIZE = 1024;
 	
 	private final static int DEFAULT_NGRAM_LIMIT = 5;
@@ -140,10 +145,14 @@ public class TextSegmentation
 	
 	private static Collection<Segmentation> unique(Collection<Segmentation> ll)
 	{
-		List<Segmentation> set = new ObjectArrayList<Segmentation>();
+		Set<Segmentation> check = new ObjectOpenHashSet<>(ll.size());
+		List<Segmentation> set = new ObjectArrayList<Segmentation>(ll.size());
 		for (Segmentation l: ll)
-			if (!set.contains(l))
+			if (!check.contains(l))
+			{
+				check.add(l);
 				set.add(l);
+			}
 		return set;
 	}
 	
@@ -169,15 +178,28 @@ public class TextSegmentation
 		return candidates;
 	}
 	
-	public static void main(String args[])
+	public static void main(String args[]) throws Exception
 	{
-		String test = "1 1 1 1";
-		// String test = "1 2 3 4 5 6 7 8 9 0";
+		if (args[0].equals("-"))
+		{
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			String line = null;
+			while((line = br.readLine()) != null)
+			{
+				Collection<Segmentation> res = TextSegmentation.create(line,3);
+                        	for (Segmentation l: res)
+                                	print(l);
+			}
+		}
+		else
+		{
+			String test = strJoin(args, " ");
+			// String test = "1 2 3 4 5 6 7 8 9 0";
 		
-		Collection<Segmentation> res = TextSegmentation.create(test,3);
-		for (Segmentation l: res)
-			print(l);
-		
+			Collection<Segmentation> res = TextSegmentation.create(test,3);
+			for (Segmentation l: res)
+				print(l);
+		}
 	}
 	
 	private static void print(final Segmentation l)
